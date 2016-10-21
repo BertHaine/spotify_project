@@ -23,21 +23,15 @@
   },
   "dependencies": {
     "body-parser": "^1.15.1",
-<<<<<<< HEAD
-=======
     "connect-flash": "^0.1.1",
     "dotenv": "^2.0.0",
->>>>>>> brandi-facebook
     "ejs": "^2.4.2",
     "express": "^4.13.4",
     "express-ejs-layouts": "^2.1.0",
     "morgan": "^1.7.0",
-<<<<<<< HEAD
-=======
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "passport-local": "^1.0.0",
->>>>>>> brandi-facebook
     "pg": "^5.0.0",
     "pg-hstore": "^2.3.2",
     "request": "^2.75.0",

@@ -1,15 +1,12 @@
 var express = require('express');
 var ejsLayouts = require('express-ejs-layouts');
 var bodyParser = require('body-parser');
-<<<<<<< HEAD
-=======
 var passport = require('./config/ppConfig');
 var session = require('express-session');
 var request = require("request");
 var flash = require('connect-flash');
 var isLoggedIn = require('./middleware/isLoggedIn');
 require("dotenv").config();
->>>>>>> brandi-facebook
 var app = express();
 
 app.set('view engine', 'ejs');
@@ -17,8 +14,6 @@ app.set('view engine', 'ejs');
 app.use(require('morgan')('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(ejsLayouts);
-<<<<<<< HEAD
-=======
 app.use(session({
   secret: process.env.SESSION_SECRET || "brandikey",
   resave: false,
@@ -32,16 +27,11 @@ app.use(function(req, res, next) {
   res.locals.alerts = req.flash();
   next();
 });
->>>>>>> brandi-facebook
 
 app.get('/', function(req, res) {
   res.render('index');
 });
 
-<<<<<<< HEAD
-app.get('/profile', function(req, res) {
-  res.render('profile');
-=======
 app.get('/profile', isLoggedIn, function(req, res) {
   var url = "https://graph.facebook.com/me/posts?access_token=" +
     req.user.facebookToken + "";
@@ -60,7 +50,6 @@ app.get('/profile', isLoggedIn, function(req, res) {
       console.log(response.statusCode);
     }
   });
->>>>>>> brandi-facebook
 });
 
 app.use('/auth', require('./controllers/auth'));
