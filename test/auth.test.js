@@ -19,7 +19,7 @@ describe('Auth Controller', function() {
   describe('POST /auth/signup', function() {
     it('should redirect to / on success', function(done) {
       request(app).post('/auth/signup')
-      .set('Content-Type', 'application/x-www-form-urlencoded')
+      .type('form')
       .send({
         email: 'new@new.co',
         name: 'Brian',
@@ -31,7 +31,7 @@ describe('Auth Controller', function() {
 
     it('should redirect to /auth/signup on failure', function(done) {
       request(app).post('/auth/signup')
-      .set('Content-Type', 'application/x-www-form-urlencoded')
+      .type('form')
       .send({
         email: 'new',
         name: 'Brian',
@@ -52,7 +52,7 @@ describe('Auth Controller', function() {
   describe('POST /auth/login', function() {
     it('should redirect to / on success', function(done) {
       request(app).post('/auth/login')
-      .set('Content-Type', 'application/x-www-form-urlencoded')
+      .type('form')
       .send({
         email: 'new@new.co',
         password: 'password'
@@ -63,7 +63,7 @@ describe('Auth Controller', function() {
 
     it('should redirect to /auth/login on failure', function(done) {
       request(app).post('/auth/login')
-      .set('Content-Type', 'application/x-www-form-urlencoded')
+      .type('form')
       .send({
         email: 'new@new.co',
         password: 'p'
