@@ -51,4 +51,15 @@ router.get('/logout', function(req, res) {
   res.redirect('/');
 });
 
+router.get("/facebook", passport.authenticate("facebook", {
+  scope: ["public_profile", "email", "user_posts"]
+}));
+
+router.get("/callback/facebook", passport.authenticate("facebook", {
+  successRedirect: "/",
+  failureRedirect: "/auth/login",
+  failureFlash: "An error occurred, try again.",
+  successFlash: "You logged in via Facebook."
+}));
+
 module.exports = router;

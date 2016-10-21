@@ -29,12 +29,20 @@ module.exports = function(sequelize, DataTypes) {
           msg: 'Password must be between 8 and 99 characters'
         }
       }
+    },
+    facebookId: {
+      type: DataTypes.STRING
+    },
+    facebookToken: {
+      type: DataTypes.STRING
     }
   }, {
     hooks: {
       beforeCreate: function(createdUser, options, cb) {
-        var hash = bcrypt.hashSync(createdUser.password, 10);
-        createdUser.password = hash;
+        if(createdUser && createdUser.password){
+          var hash = bcrypt.hashSync(createdUser.password, 10);
+          createdUser.password = hash;
+        }
         cb(null, createdUser);
       }
     },

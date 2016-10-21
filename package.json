@@ -32,9 +32,11 @@
     "express-session": "^1.13.0",
     "morgan": "^1.7.0",
     "passport": "^0.3.2",
+    "passport-facebook": "^2.1.1",
     "passport-local": "^1.0.0",
     "pg": "^5.0.0",
     "pg-hstore": "^2.3.2",
+    "request": "^2.75.0",
     "sequelize": "^3.23.3"
   }
 }
