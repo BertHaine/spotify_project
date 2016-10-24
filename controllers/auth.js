@@ -1,4 +1,5 @@
 var express = require('express');
+var passport = require("../config/ppConfig");
 var router = express.Router();
 
 router.get('/signup', function(req, res) {
@@ -9,8 +10,6 @@ router.get('/login', function(req, res) {
   res.render('auth/login');
 });
 
-<<<<<<< HEAD
-=======
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/auth/login',
@@ -35,5 +34,4 @@ router.get("/callback/facebook", passport.authenticate("facebook", {
   successFlash: "You logged in via Facebook."
 }));
 
->>>>>>> brandi-facebook
 module.exports = router;
