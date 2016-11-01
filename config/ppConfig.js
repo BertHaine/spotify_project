@@ -1,6 +1,5 @@
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var FacebookStrategy = require("passport-facebook").Strategy;
+var SpotifyStrategy = require("passport-spotify").Strategy;
 var db = require('../models');
 require("dotenv").config();
 
@@ -14,27 +13,25 @@ passport.deserializeUser(function(id, cb) {
   }).catch(cb);
 });
 
-passport.use(new LocalStrategy({
-  usernameField: 'email',
-  passwordField: 'password'
-}, function(email, password, cb) {
-  db.user.find({
-    where: { email: email }
-  }).then(function(user) {
-    if (!user || !user.validPassword(password)) {
-      cb(null, false);
-    } else {
-      cb(null, user);
-    }
-  }).catch(cb);
-}));
+// passport.use(new LocalStrategy({
+//   usernameField: 'email',
+//   passwordField: 'password'
+// }, function(email, password, cb) {
+//   db.user.find({
+//     where: { email: email }
+//   }).then(function(user) {
+//     if (!user || !user.validPassword(password)) {
+//       cb(null, false);
+//     } else {
+//       cb(null, user);
+//     }
+//   }).catch(cb);
+// }));
 
-passport.use(new FacebookStrategy({
-  clientID: process.env.FACEBOOK_APP_ID,
-  clientSecret: process.env.FACEBOOK_APP_SECRET,
-  callbackURL: process.env.BASE_URL + "/auth/callback/facebook",
-  profileFields: ["id", "email", "displayName", "posts", "feed"],
-  enableProof: true
+passport.use(new SpotifyStrategy({
+  clientID: process.env.SPOTIFY_APP_ID,
+  clientSecret: process.env.SPOTIFY_SECRET,
+  callbackURL: process.env.REDIRECT_URI
 }, function(accessToken, refreshToken, profile, cb){
   //Pull the email from the profile if it exists
   var email = profile.emails ? profile.emails[0].value : null;
@@ -45,18 +42,18 @@ passport.use(new FacebookStrategy({
   }).then(function(existingUser){
     if(existingUser && email){
       existingUser.updateAttributes({
-        facebookId: profile.id,
-        facebookToken: accessToken
+        spotifyId: profile.id,
+        spotifyToken: accessToken
       }).then(function(updatedUser){
         cb(null, updatedUser);
       }).catch(cb);
     }
     else {
       db.user.findOrCreate({
-        where: {facebookId: profile.id},
+        where: {spotifyId: profile.id},
         defaults: {
-          facebookToken: accessToken,
-          name: profile.displayName,
+          spotifyToken: accessToken,
+          name: profile.display_name,
           email: email
         }
       }).spread(function(user, created){
@@ -64,7 +61,7 @@ passport.use(new FacebookStrategy({
           return cb(null, user);
         }
         else {
-          user.facebookToken = accessToken;
+          user.spotifyToken = accessToken;
           user.save().then(function(){
             cb(null, user);
           }).catch(cb);

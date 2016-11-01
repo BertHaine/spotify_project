@@ -1,6 +1,7 @@
 var express = require('express');
 var passport = require("../config/ppConfig");
 var router = express.Router();
+var SpotifyWebApi = require('spotify-web-api-node');
 
 router.get('/signup', function(req, res) {
   res.render('auth/signup');
@@ -10,12 +11,12 @@ router.get('/login', function(req, res) {
   res.render('auth/login');
 });
 
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/auth/login',
-  failureFlash: 'Invalid username and/or password',
-  successFlash: 'You have logged in'
-}));
+// router.post('/login', passport.authenticate('local', {
+//   successRedirect: '/',
+//   failureRedirect: '/auth/login',
+//   failureFlash: 'Invalid username and/or password',
+//   successFlash: 'You have logged in'
+// }));
 
 router.get('/logout', function(req, res) {
   req.logout();
@@ -23,15 +24,9 @@ router.get('/logout', function(req, res) {
   res.redirect('/');
 });
 
-router.get("/facebook", passport.authenticate("facebook", {
-  scope: ["public_profile", "email", "user_posts"]
+router.get("/spotify", passport.authenticate("spotify", {
+  scope: ['user-read-email', 'user-read-private']
 }));
 
-router.get("/callback/facebook", passport.authenticate("facebook", {
-  successRedirect: "/",
-  failureRedirect: "/auth/login",
-  failureFlash: "An error occurred, try again.",
-  successFlash: "You logged in via Facebook."
-}));
 
 module.exports = router;

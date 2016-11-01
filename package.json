@@ -22,19 +22,23 @@
     "supertest": "^1.2.0"
   },
   "dependencies": {
+    "bcrypt": "^0.8.7",
     "body-parser": "^1.15.1",
     "connect-flash": "^0.1.1",
     "dotenv": "^2.0.0",
     "ejs": "^2.4.2",
-    "express": "^4.13.4",
+    "express": "^4.14.0",
     "express-ejs-layouts": "^2.1.0",
+    "express-session": "^1.14.1",
     "morgan": "^1.7.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "passport-local": "^1.0.0",
+    "passport-spotify": "^0.3.0",
     "pg": "^5.0.0",
     "pg-hstore": "^2.3.2",
     "request": "^2.75.0",
-    "sequelize": "^3.24.5"
+    "sequelize": "^3.24.5",
+    "spotify-web-api-node": "^2.3.6"
   }
 }

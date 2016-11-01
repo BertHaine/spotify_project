@@ -1,0 +1,67 @@
+body {
+	margin: 0 auto;
+	text-align: center;
+	background-color: #272322;
+	color: white;
+	font-family: "futura-pt", Helvetica, sans-serif, !important;
+	font-weight: 500;
+	text-transform: uppercase;
+}
+
+#login, #loggedin {
+	display: none;
+    }
+
+.text-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 500px;
+    }
+
+h1 {
+	font-family: "futura-pt", Helvetica, sans-serif;
+	font-weight: 500;
+	text-transform: uppercase;
+}
+
+h2 {
+	font-family: "futura-pt", Helvetica, sans-serif;
+	font-weight: 500;
+	text-transform: lowercase;
+	font-size: 20px;
+}
+
+p {
+	font-family: "franklin-gothic-urw", Helvetica, sans-serif;
+	text-transform: none;
+}
+
+input {
+	margin-bottom: 20px;
+}
+
+.hero {
+	height: 300px;
+	background-image: url("http://40.media.tumblr.com/f2916759544c106d91c28a9e0fd2cb94/tumblr_n7qhrzxUiv1sfie3io1_1280.jpg");
+	background: linear-gradient(to right top ,#00b7c7 0,#4d0ce8 100%); opacity: .9;
+	margin-bottom: 50px;
+	margin-top: 10px;
+	
+}
+
+.hero p {
+	padding-top: 110px;
+	font-size: 20px;
+	width: 800px;
+	margin: 0 auto;
+}
+
+
+.btn {
+	font-family: "futura-pt", Helvetica, sans-serif;
+	font-weight: 500;
+	text-transform: uppercase;
+  	border-radius: 16px;
+  	letter-spacing: 1.2px;
+}
