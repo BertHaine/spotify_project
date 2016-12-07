@@ -7,9 +7,9 @@ router.get('/signup', function(req, res) {
   res.render('auth/signup');
 });
 
-router.get('/login', function(req, res) {
-  res.render('auth/login');
-});
+// router.get('/login', function(req, res) {
+//   res.render('auth/login');
+// });
 
 // router.post('/login', passport.authenticate('local', {
 //   successRedirect: '/',

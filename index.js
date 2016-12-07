@@ -69,9 +69,9 @@ app.get('/', function(req, res) {
 app.get('/playlists', isLoggedIn, function(req, res) {
   spotifyApi.getUserPlaylists(req.user.spotifyId)
   .then(function(data) {
-    console.log('Retrieved playlists', data.body);
+    // console.log('Retrieved playlists', data.body);
   },function(err) {
-    console.log('Something went wrong!', err);
+    // console.log('Something went wrong!', err);
   });
 });
 
@@ -81,22 +81,20 @@ app.get('/search', isLoggedIn, function(req, res){
   if (req.user) {
     spotifyApi.setAccessToken(req.user.spotifyToken);
   }
-  res.render('search');
-
+  // do general search, from the results pull out the id https://api.spotify.com/v1/
   console.log("artist id:", req.query.name);
 
   spotifyApi.getArtistTopTracks('20qISvAhX20dpIbOOzGK3q', 'US')
   .then(function(data) {
-    console.log('Artist albums', data.body);
-
-    var spotifyData = JSON.parse(data.body);
-    console.log(spotifyData);
-
+    // console.log('Artist albums', data.body.tracks);
+    // var spotifyData = data.body.tracks[3].name;
+    // console.log('track name is ', spotifyData)
+  res.render('search', {albums: data.body.tracks});
   }, function(err) {
-    console.error(err);
+    // console.error(err);
   });
 });
-
+  
 
 app.get("/callback", passport.authenticate("spotify", {
   successRedirect: "/search",

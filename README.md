@@ -1,5 +1,4 @@
-- [ ] Get Oath Working
-- [ ] Display search results in table (fake data)
+- [ ] Display search results in table
 - [ ] play song in table
 - [ ] retrieve search results from API
 - [ ] display search results from API in table
