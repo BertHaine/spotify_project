@@ -9,6 +9,7 @@ var isLoggedIn = require('./middleware/isLoggedIn');
 require("dotenv").config();
 var app = express();
 var SpotifyWebApi = require('spotify-web-api-node');
+var get = require('lodash/get');
 
 app.set('view engine', 'ejs');
 
@@ -82,19 +83,38 @@ app.get('/search', isLoggedIn, function(req, res){
     spotifyApi.setAccessToken(req.user.spotifyToken);
   }
   // do general search, from the results pull out the id https://api.spotify.com/v1/
-  console.log("artist id:", req.query.name);
+  var artist = req.query.name;
 
-  spotifyApi.getArtistTopTracks('20qISvAhX20dpIbOOzGK3q', 'US')
-  .then(function(data) {
-    // console.log('Artist albums', data.body.tracks);
-    // var spotifyData = data.body.tracks[3].name;
-    // console.log('track name is ', spotifyData)
-  res.render('search', {albums: data.body.tracks});
+  spotifyApi.searchArtists('nas')
+  .then((data) => {
+    const artist = get(data, 'body.artists.items')[0];
+    const artistId = get(artist, 'id');
+
+    console.log('Search artists results ', artistId);
+
+    if (artistId) {
+      return spotifyApi.getArtistTopTracks(artistId, 'US')
+      .then(function(data) {
+
+        const tracks = get(data, 'body.tracks');
+        console.log(tracks);
+        // console.log('Artist albums', data.body.tracks);
+        // var spotifyData = data.body.tracks[3].name;
+        // console.log('track name is ', spotifyData)
+        if (tracks) {
+          return res.render('search', {tracks: data.body.tracks});
+        }
+        res.render(new Error('No tracks found'));
+      }, function(err) {
+        console.error(err);
+      });
+    }
+    console.log('No artist found');
   }, function(err) {
-    // console.error(err);
+    console.error(err);
   });
 });
-  
+
 
 app.get("/callback", passport.authenticate("spotify", {
   successRedirect: "/search",
