@@ -131,11 +131,23 @@ app.get("/callback", passport.authenticate("spotify", {
 
 
 app.post('/playlist', isLoggedIn, function(req, res) {
-    if (req.user) {
+  if (req.user) {
     spotifyApi.setAccessToken(req.user.spotifyToken);
   }
-  spotifyApi.createPlaylist(req.user, 'My Cool Playlist', { 'public' : false })
+  // req.body.name
+  spotifyApi.createPlaylist(req.user.name, 'My Cool Playlist', { 'public' : false })
   .then(function(data) {
+    console.log(data)
+    spotifyApi.addTracksToPlaylist('thelinmichael', 
+      '5ieJqeLJjjI8iJWaxeBLuK', 
+      req.body.tracks)
+    .then(function(data2) {
+      console.log('Added tracks to playlist!', data2);
+      
+    }, function(err) {
+      console.log('Something went wrong!', err);
+    });
+
     console.log('Created playlist!');
   }, function(err) {
     console.log('Something went wrong!', err);
@@ -143,11 +155,4 @@ app.post('/playlist', isLoggedIn, function(req, res) {
 });
 
 
-
-
 app.use('/auth', require('./controllers/auth'));
-
-
-
-var server = app.listen(process.env.PORT || 8888);
-module.exports = server;
