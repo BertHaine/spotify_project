@@ -76,16 +76,19 @@ app.get('/playlists', isLoggedIn, function(req, res) {
   });
 });
 
+//Album
+app.post('/album', isLoggedIn, function(req, res){
 
+  console.log(req.body.artist);
 
-app.get('/search', isLoggedIn, function(req, res){
   if (req.user) {
     spotifyApi.setAccessToken(req.user.spotifyToken);
   }
+  
   // do general search, from the results pull out the id https://api.spotify.com/v1/
-  var artist = req.query.name;
+  var artist = req.body.artist;
 
-  spotifyApi.searchArtists('nas')
+  spotifyApi.searchArtists(artist)
   .then((data) => {
     const artist = get(data, 'body.artists.items')[0];
     const artistId = get(artist, 'id');
@@ -102,7 +105,7 @@ app.get('/search', isLoggedIn, function(req, res){
         // var spotifyData = data.body.tracks[3].name;
         // console.log('track name is ', spotifyData)
         if (tracks) {
-          return res.render('search', {tracks: data.body.tracks});
+          return res.render('album', {tracks: data.body.tracks});
         }
         res.render(new Error('No tracks found'));
       }, function(err) {
@@ -115,6 +118,9 @@ app.get('/search', isLoggedIn, function(req, res){
   });
 });
 
+app.get('/search', isLoggedIn, function(req, res){
+  res.render('search');
+})
 
 app.get("/callback", passport.authenticate("spotify", {
   successRedirect: "/search",
@@ -122,6 +128,22 @@ app.get("/callback", passport.authenticate("spotify", {
   failureFlash: "An error occurred, try again.",
   successFlash: "You logged in via Spotify."
 }));
+
+
+app.post('/playlist', isLoggedIn, function(req, res) {
+    if (req.user) {
+    spotifyApi.setAccessToken(req.user.spotifyToken);
+  }
+  spotifyApi.createPlaylist(req.user, 'My Cool Playlist', { 'public' : false })
+  .then(function(data) {
+    console.log('Created playlist!');
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+});
+
+
+
 
 app.use('/auth', require('./controllers/auth'));
 

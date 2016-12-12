@@ -1,4 +1,13 @@
-<h1>Artist Name - Top 20 Tracks</h1>
-<ul>
-  <li><i class="fa fa-play pull-left"></i>Artist Name - Track 1</li>
-</ul>
+<h1>Results</h1>
+<form id="search-form" action="/playlist" method="POST">
+<button class="btn btn-primary">Create Playlist</button>
+</form>
+<div id="results">
+  <% tracks.forEach(function(track){ %>
+  <div class="track">
+    <h2 >Artist: <%= track.album.artists[0].name %></h2> 
+    <p><span class="play">&#9658</span>Track: <%= track.album.name %> </p>
+    <iframe src="https://embed.spotify.com/?uri=<%= track.album.uri %>" width="250" height="80" frameborder="0" allowtransparency="true"></iframe>
+  </div>
+  <% }); %>
+</div>
