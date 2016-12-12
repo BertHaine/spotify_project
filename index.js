@@ -67,14 +67,6 @@ app.get('/', function(req, res) {
 // });
 
 
-app.get('/playlists', isLoggedIn, function(req, res) {
-  spotifyApi.getUserPlaylists(req.user.spotifyId)
-  .then(function(data) {
-    // console.log('Retrieved playlists', data.body);
-  },function(err) {
-    // console.log('Something went wrong!', err);
-  });
-});
 
 //Album
 app.post('/album', isLoggedIn, function(req, res){
@@ -143,7 +135,7 @@ app.post('/playlist', isLoggedIn, function(req, res) {
       req.body.tracks)
     .then(function(data2) {
       console.log('Added tracks to playlist!', data2);
-      
+
     }, function(err) {
       console.log('Something went wrong!', err);
     });
