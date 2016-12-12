@@ -148,3 +148,8 @@ app.post('/playlist', isLoggedIn, function(req, res) {
 
 
 app.use('/auth', require('./controllers/auth'));
+
+
+
+var server = app.listen(process.env.PORT || 8888);
+module.exports = server;
