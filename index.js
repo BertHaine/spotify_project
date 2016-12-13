@@ -123,7 +123,6 @@ spotifyApi.createPlaylist(spotifyName, playlistName, { 'public' : false })
     spotifyApi.addTracksToPlaylist(spotifyName, playlistId, [tracks])
       .then(function(data) {
         console.log('Added tracks to playlist!');
-        alert('playlist created!');
       }, function(err) {
         console.log('Something went wrong!', err);
       });
