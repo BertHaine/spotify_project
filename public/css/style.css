@@ -41,29 +41,39 @@ input {
 	margin-bottom: 20px;
 }
 
+
 .hero {
 	height: 300px;
-	background-image: url("http://40.media.tumblr.com/f2916759544c106d91c28a9e0fd2cb94/tumblr_n7qhrzxUiv1sfie3io1_1280.jpg");
-	background: linear-gradient(to right top ,#00b7c7 0,#4d0ce8 100%); opacity: .9;
 	margin-bottom: 50px;
-	margin-top: 10px;
-	
+  margin-top: -19px;
+  background: 
+    /* top, transparent red */ 
+    linear-gradient(to left top, 
+      rgba(0,183,199, 0.8), 
+      rgba(77,12,232, 0.8)
+    ),
+    /* bottom, image */
+    url('/img/image.jpg') no-repeat center 50%;
+    background-size: cover;
 }
 
 .hero p {
-	padding-top: 110px;
 	font-size: 20px;
 	width: 800px;
 	margin: 0 auto;
 }
 
+.heroTitle {
+  padding-top: 100px;
+  letter-spacing: 1.2px;
+}
 
 .btn {
 	font-family: "futura-pt", Helvetica, sans-serif;
 	font-weight: 500;
 	text-transform: uppercase;
-  	border-radius: 16px;
-  	letter-spacing: 1.2px;
+	border-radius: 16px;
+	letter-spacing: 1.2px;
 }
 
 ul {

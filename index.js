@@ -40,32 +40,11 @@ var spotifyApi = new SpotifyWebApi({
 
 app.get('/', function(req, res) {
   if (req.user) {
-    // console.log("token:", req.user.spotifyToken);
+    console.log("token:", req.user.spotifyToken);
     spotifyApi.setAccessToken(req.user.spotifyToken);
   }
   res.render('index');
 });
-
-// app.get('/profile', isLoggedIn, function(req, res) {
-//   var url = "https://graph.facebook.com/me/posts?access_token=" +
-//     req.user.facebookToken + "";
-//   request(url, function(error, response, body){
-//     if (!error && response.statusCode == 200) {
-//       var dataObj = JSON.parse(body);
-
-//       var postArray = dataObj.data.filter(function(post){
-//         return post.message;
-//       });
-
-//       res.send(postArray);
-//     }
-//     else {
-//       console.log("error = " + error);
-//       console.log(response.statusCode);
-//     }
-//   });
-// });
-
 
 
 //Album
@@ -126,25 +105,37 @@ app.post('/playlist', isLoggedIn, function(req, res) {
   if (req.user) {
     spotifyApi.setAccessToken(req.user.spotifyToken);
   }
+
+  tracks = req.body.tracks;
+  console.log("tracks: " + tracks);
+
+  spotifyName = req.user.spotifyId;
+  playlistName = req.body.playlistName;
+  playlistId = "";
+  console.log("name: " + spotifyName);
   // req.body.name
-  spotifyApi.createPlaylist(req.user.name, 'My Cool Playlist', { 'public' : false })
+
+spotifyApi.createPlaylist(spotifyName, playlistName, { 'public' : false })
   .then(function(data) {
-    console.log(data)
-    spotifyApi.addTracksToPlaylist('thelinmichael', 
-      '5ieJqeLJjjI8iJWaxeBLuK', 
-      req.body.tracks)
-    .then(function(data2) {
-      console.log('Added tracks to playlist!', data2);
-
-    }, function(err) {
-      console.log('Something went wrong!', err);
-    });
-
     console.log('Created playlist!');
+    playlistId = data.body.id;
+    console.log(playlistId);
+    spotifyApi.addTracksToPlaylist(spotifyName, playlistId, [tracks])
+      .then(function(data) {
+        console.log('Added tracks to playlist!');
+        alert('playlist created!');
+      }, function(err) {
+        console.log('Something went wrong!', err);
+      });
+
   }, function(err) {
     console.log('Something went wrong!', err);
   });
+
+// Add tracks to a playlist
 });
+
+
 
 
 app.use('/auth', require('./controllers/auth'));

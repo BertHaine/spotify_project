@@ -1,13 +1,25 @@
-<h1>Results</h1>
-<form id="search-form" action="/playlist" method="POST">
-<button class="btn btn-primary">Create Playlist</button>
-</form>
+<h1>Spotify BestOf Playlist Generator</h1>
 <div id="results">
+  <% var uriArray = tracks.map(function(track){ %>
+  <% return track.uri; %>
+  <% }); %>
+  <form id="playlist-form" action="/playlist" method="POST">
+  <input type="hidden" value="<%= uriArray %>" name="tracks">
+  <label for="playlistName">Name Your Playlist</label>
+  <div class="clearfix"></div>
+  <input type="text" style="color: black" placeholder="Enter a playlist name" name="playlistName">
+  <div class="clearfix"></div>
+  <button class="btn btn-primary">Create Playlist</button>
+  </form>
+  <br>
   <% tracks.forEach(function(track){ %>
+  <% uriArray.push(track.uri); %>
+  <% uriArray.join(","); %>
   <div class="track">
-    <h2 >Artist: <%= track.album.artists[0].name %></h2> 
-    <p><span class="play">&#9658</span>Track: <%= track.album.name %> </p>
-    <iframe src="https://embed.spotify.com/?uri=<%= track.album.uri %>" width="250" height="80" frameborder="0" allowtransparency="true"></iframe>
+    <h2><span class="play">&#9658</span> &nbsp; &nbsp;<%= track.album.artists[0].name %>&nbsp; - &nbsp;<%= track.name %> </p>
+    <br>
+    <iframe src="https://embed.spotify.com/?uri=<%= track.uri %>" width="250" height="80" frameborder="0" allowtransparency="true"></iframe>
+    <br><br>
   </div>
   <% }); %>
 </div>
